@@ -1,0 +1,41 @@
+<html>
+    <body>
+        <style>
+            body{
+                background-color: #acd1af;
+            }
+            
+            </style>
+        <script>
+            // https://in.mathworks.com/help/thingspeak/readdata.html
+            const api_url = 'https://api.thingspeak.com/channels/1619741/feeds.json?api_key=ILXW1ZVU0NZCH4RS';
+            //const api_url = 'https://api.thingspeak.com/channels/1619741/feeds/last.json';
+            async function getData()
+            {
+                const response = await fetch(api_url);
+                const data = await response.json();
+                console.log(data);
+                // const { a1, a2 } = data;
+                // document.getElementById('div1').innerHTML = data.value.toString();
+                // document.getElementById('div2').textContent = a2;
+                //alert(data.channel.id);
+                var out;
+                out="<center><table border='2' style='margin-top:100px;padding:0px;box-shadow: 0px 0px 30px rgb(19, 18, 18); '><tr style='background-color:#315a39;color:white;font-weight:bold;font-size:27px'><td style='padding:25px'>Entry ID</td><td style='padding:25px'>Humidity</td><td style='padding:25px'>Heat Index</td><td style='padding:25px'>Feran-heat</td>";
+                //document.getElementById("div1").innerHTML = "<table>";
+                for(var i=0;i<data.feeds.length;i++)
+                {
+                    out+="<tr><td style='padding:25px'>"+data.feeds[i].entry_id+"</td><td style='padding:25px'>"+data.feeds[i].field1+"</td><td style='padding:25px'>"+data.feeds[i].field3+"</td><td style='padding:25px'>"+data.feeds[i].field4+"</td></tr>";
+                    //document.getElementById("div1").innerHTML += "<tr><td>"+data.feeds[i].entry_id+"</td><td>"+data.feeds[i].field1+"</td><td>"+data.feeds[i].field2+"</td></tr>";
+                    //alert(data.feeds[i].entry_id)
+                }     
+                out+="</table></center";     
+                document.getElementById("div1").innerHTML = out;//"</table>";     
+            }
+            getData();
+            //https://codesandbox.io/s/ey0w4?file=/src/App.js
+            //https://github.com/jahidulbinrafiq/HTTP_REQUEST_Methods/blob/main/delete.html
+        </script>
+        <div id="div1"></div>
+        <div id="div2"></div>
+    </body>
+</html>
